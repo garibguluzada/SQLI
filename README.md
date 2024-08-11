@@ -8,7 +8,7 @@ Try typing an apostrophe ( ' ) after the id=1 and press enter. And you'll see th
 
 The first thing we need to do is return data to the browser without displaying an error message. Firstly, we'll try the UNION operator so we can receive an extra result if we choose it. Try setting the mock browsers id parameter to:
 
-```http
+```
 1 UNION SELECT 1
 ```
 

@@ -60,41 +60,40 @@ This query looks for results in the information_schema database in the tables ta
 You'll finally end up discovering a table in the sqli_three database named users, which you can confirm by running the following username payload:
 
 
-
+```
 admin123' UNION SELECT 1,2,3 FROM information_schema.tables WHERE table_schema = 'sqli_three' and table_name='users';--
-
+```
 
 
 Lastly, we now need to enumerate the column names in the users table so we can properly search it for login credentials. Again, we can use the information_schema database and the information we've already gained to query it for column names. Using the payload below, we search the columns table where the database is equal to sqli_three, the table name is users, and the column name begins with the letter a.
 
 
-
+```
 admin123' UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='sqli_three' and TABLE_NAME='users' and COLUMN_NAME like 'a%';
-
+```
 
 
 Again,  you'll need to cycle through letters, numbers and characters until you find a match. As you're looking for multiple results, you'll have to add this to your payload each time you find a new column name to avoid discovering the same one. For example, once you've found the column named id, you'll append that to your original payload (as seen below).
 
 
-
+```
 admin123' UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='sqli_three' and TABLE_NAME='users' and COLUMN_NAME like 'a%' and COLUMN_NAME !='id';
-
+```
 
 
 Repeating this process three times will enable you to discover the columns' id, username and password. Which now you can use to query the users table for login credentials. First, you'll need to discover a valid username, which you can use the payload below:
 
 
-
+```
 admin123' UNION SELECT 1,2,3 from users where username like 'a%
-
+```
 
 
 Once you've cycled through all the characters, you will confirm the existence of the username admin. Now you've got the username. You can concentrate on discovering the password. The payload below shows you how to find the password:
 
 
-
+```
 admin123' UNION SELECT 1,2,3 from users where username='admin' and password like 'a%
-
-
+```
 
 Cycling through all the characters, you'll discover the password is 3845.

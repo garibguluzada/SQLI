@@ -12,25 +12,18 @@ Example query to the database is the following:
 select * from users where username='%username%' and password='%password%' LIMIT 1;
 ```
 
-
 N.B The %username% and %password% values are taken from the login form fields. The initial values in the SQL Query box will be blank as these fields are currently empty.
-
-
 
 To make this into a query that always returns as true, we can enter the following into the password field:
 
-
-
+```
 ' OR 1=1;--
-
-
+```
 
 Which turns the SQL query into the following:
 
-
-
+```
 select * from users where username='' and password='' OR 1=1;
-
-
+```
 
 Because 1=1 is a true statement and we've used an OR operator, this will always cause the query to return as true, which satisfies the web applications logic that the database found a valid username/password combination and that access should be allowed.
